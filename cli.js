@@ -5,6 +5,7 @@ const commander = require(`commander`);
 const {
   runContentMigrations,
   runComponentMigrations,
+  clearSpace,
 } = require(`./`);
 const { version } = require(`./package`);
 const discover = require(`./utils/discover`);
@@ -27,6 +28,10 @@ async function start() {
       .parse(process.argv);
 
     const { components } = discover;
+
+    await clearSpace();
+
+    console.loc('CMDR >>>', commander);
 
     if (commander.componentMigrations) {
       const filteredComponents = commander.components

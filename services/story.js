@@ -42,10 +42,15 @@ function createOrUpdate({ story }) {
   return story.id ? update({ story }) : create({ story });
 }
 
+function remove({ story }) {
+  return api.delete(`spaces/${spaceId}/stories/${story.id}`);
+}
+
 module.exports = {
   create,
   createOrUpdate,
   get,
   list,
   update,
+  remove,
 };

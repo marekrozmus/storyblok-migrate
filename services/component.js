@@ -7,11 +7,7 @@ function removeMigrations(component) {
 }
 
 function remove({ component }) {
-  api.delete(`spaces/${spaceId}/components/${component.id}`).then(response => {
-    console.log(response)
-  }).catch(error => { 
-    console.log(error)
-  })
+  return api.delete(`spaces/${spaceId}/components/${component.id}`);
 }
 
 function list() {

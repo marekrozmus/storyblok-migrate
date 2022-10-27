@@ -18,13 +18,31 @@ function contentTypesFromComponents(components) {
   return components.map(x => x.name);
 }
 
-async function runComponentMigrations({ components }) {
+async function clearSpace() {
   const { data: { components: remoteComponents } } = await componentService.list();
 
   for (const component of remoteComponents) {
     componentService.remove({ component })
     console.info(`${component.display_name || component.name} was removed`);
   }
+
+  const storyPages = await unpaginate({ cb: storyService.list });
+
+  for (const storyPage of storyPages) {
+    storyService.remove({ story: storyPage })
+    console.info(`${ storyPage.id } was removed`);
+  }
+}
+
+async function runComponentMigrations({ components }) {
+  const { data: { components: existingRemoteComponents } } = await componentService.list();
+
+  for (const component of existingRemoteComponents) {
+    componentService.remove({ component })
+    console.info(`${component.display_name || component.name} was removed`);
+  }
+
+  const { data: { components: remoteComponents } } = await componentService.list();
 
   for (const component of components) {
     const remoteComponent = remoteComponents
@@ -95,4 +113,5 @@ async function runContentMigrations({ components }) {
 module.exports = {
   runComponentMigrations,
   runContentMigrations,
+  clearSpace,
 };
