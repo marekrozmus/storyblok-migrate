@@ -7,7 +7,7 @@ function removeMigrations(component) {
 }
 
 function remove({ component }) {
-  Storyblok.delete(`spaces/${spaceId}/components/${component.id}`).then(response => {
+  api.delete(`spaces/${spaceId}/components/${component.id}`).then(response => {
     console.log(response)
   }).catch(error => { 
     console.log(error)
