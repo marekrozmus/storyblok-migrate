@@ -21,33 +21,37 @@ function contentTypesFromComponents(components) {
 async function runComponentMigrations({ components }) {
   const { data: { components: remoteComponents } } = await componentService.list();
 
-  for (const component of components) {
+  for (const component of remoteComponents) {
     componentService.remove({ component })
-    // const remoteComponent = remoteComponents
-    //   .find(x => x.name === component.name);
+    console.info(`${component.display_name || component.name} was removed`);
+  }
 
-    // if (remoteComponent) {
-    //   if (config.dryRun) {
-    //     // eslint-disable-next-line no-console
-    //     console.info(`${component.display_name || component.name} component would've been updated`);
-    //     continue;
-    //   }
-    //   const mappedComponent = { id: remoteComponent.id, ...component };
-    //   await componentService.update({ component: mappedComponent });
-    //   // eslint-disable-next-line no-console
-    //   console.log(`${component.display_name || component.name} component has been updated`);
-    //   continue;
-    // }
+  for (const component of components) {
+    const remoteComponent = remoteComponents
+      .find(x => x.name === component.name);
 
-    // if (config.dryRun) {
-    //   // eslint-disable-next-line no-console
-    //   console.info(`${component.display_name || component.name} component would've been created`);
-    //   continue;
-    // }
+    if (remoteComponent) {
+      if (config.dryRun) {
+        // eslint-disable-next-line no-console
+        console.info(`${component.display_name || component.name} component would've been updated`);
+        continue;
+      }
+      const mappedComponent = { id: remoteComponent.id, ...component };
+      await componentService.update({ component: mappedComponent });
+      // eslint-disable-next-line no-console
+      console.log(`${component.display_name || component.name} component has been updated`);
+      continue;
+    }
 
-    // await componentService.create({ component });
-    // // eslint-disable-next-line no-console
-    // console.log(`${component.display_name || component.name} component has been created`);
+    if (config.dryRun) {
+      // eslint-disable-next-line no-console
+      console.info(`${component.display_name || component.name} component would've been created`);
+      continue;
+    }
+
+    await componentService.create({ component });
+    // eslint-disable-next-line no-console
+    console.log(`${component.display_name || component.name} component has been created`);
   }
 }
 
