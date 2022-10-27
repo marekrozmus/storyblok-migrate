@@ -37,9 +37,8 @@ async function clearSpace() {
 }
 
 async function runStoriesMigrations({ stories }) {
-  console.log("!!!!!!!", stories)
   for (const story of stories) {
-    await storyService.create({ story });
+    await storyService.create(story);
     // eslint-disable-next-line no-console
     console.log(`${story.name} component has been created`);
   }
