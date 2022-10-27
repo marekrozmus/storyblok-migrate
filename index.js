@@ -32,7 +32,15 @@ async function clearSpace() {
 
   for (const originalStory of stories) {
     storyService.remove({ story: originalStory });
-    console.info(`${ originalStory.id } was removed`);
+    console.info(`Story ${ originalStory.name } was removed`);
+  }
+}
+
+async function runStoriesMigrations({ stories }) {
+  for (const story of stories) {
+    await storyService.create({ story });
+    // eslint-disable-next-line no-console
+    console.log(`${story.name} component has been created`);
   }
 }
 
@@ -116,4 +124,5 @@ module.exports = {
   runComponentMigrations,
   runContentMigrations,
   clearSpace,
+  runStoriesMigrations,
 };

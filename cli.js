@@ -5,6 +5,7 @@ const commander = require(`commander`);
 const {
   runContentMigrations,
   runComponentMigrations,
+  runStoriesMigrations,
   clearSpace,
 } = require(`./`);
 const { version } = require(`./package`);
@@ -27,7 +28,7 @@ async function start() {
       .option(`--dry-run`, `see what would happen without applying the changes`)
       .parse(process.argv);
 
-    const { components } = discover;
+    const { components, stories } = discover;
 
     await clearSpace();
 
@@ -37,6 +38,8 @@ async function start() {
         : components;
       await runComponentMigrations({ components: filteredComponents });
     }
+
+    await runStoriesMigrations({ stories });
 
     const contentTypeComponents = discover.contentTypeComponents();
 

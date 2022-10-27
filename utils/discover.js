@@ -12,6 +12,7 @@ function findComponents(componentDirectory) {
 }
 
 const components = findComponents(config.componentDirectory);
+const stories = findComponents(config.storyDirectory);
 
 function contentTypeComponents() {
   return components.filter(x => x.is_root);
@@ -24,5 +25,6 @@ function componentByName(name) {
 module.exports = {
   componentByName,
   components,
+  stories,
   contentTypeComponents,
 };
