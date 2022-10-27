@@ -31,7 +31,7 @@ async function start() {
 
     await clearSpace();
 
-    console.loc('CMDR >>>', commander);
+    console.log('CMDR >>>', commander);
 
     if (commander.componentMigrations) {
       const filteredComponents = commander.components
