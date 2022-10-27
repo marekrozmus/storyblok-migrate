@@ -6,6 +6,14 @@ function removeMigrations(component) {
   return cleanComponent;
 }
 
+function remove({ component }) {
+  Storyblok.delete(`spaces/${spaceId}/components/${component.id}`).then(response => {
+    console.log(response)
+  }).catch(error => { 
+    console.log(error)
+  })
+}
+
 function list() {
   return api.get(`spaces/${spaceId}/components`);
 }
@@ -31,4 +39,5 @@ module.exports = {
   createOrUpdate,
   list,
   update,
+  remove
 };
