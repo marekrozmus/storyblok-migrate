@@ -31,6 +31,7 @@ async function list({ contentTypes, page } = {}) {
 }
 
 function create({ story }) {
+  console.log("!!!!!!!", story)
   return api.post(`spaces/${spaceId}/stories`, { story });
 }
 
