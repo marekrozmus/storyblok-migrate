@@ -28,11 +28,12 @@ async function clearSpace() {
 
   const storyPages = await unpaginate({ cb: storyService.list });
 
-  console.log('>>>', storyPages)
-  // for (const storyPage of storyPages) {
-  //   storyService.remove({ story: storyPage })
-  //   console.info(`${ storyPage.id } was removed`);
-  // }
+  const stories = storyPages.reduce((prev, next) => [...prev, ...next.stories], []);
+
+  for (const originalStory of stories) {
+    storyService.remove({ story: originalStory });
+    console.info(`${ originalStory.id } was removed`);
+  }
 }
 
 async function runComponentMigrations({ components }) {
